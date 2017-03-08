@@ -69,7 +69,7 @@ if (month <= 1 || month == 11) { //zima
             'url("http://img3.themebin.com/1920x1200/misty_blue.jpg")';
     } else if (weatherMain == "Rain" || weatherMain == "Drizzle") {
         document.body.style.backgroundImage =
-            'url("https://cdn.pixabay.com/photo/2015/11/18/10/46/rain-1048936_960_720.jpg")';
+            'url("https://cdn.pixabay.com/photo/2016/07/20/17/53/pond-1530797_960_720.jpg")';
     } else {
         document.body.style.backgroundImage =
             'url("http://1.bp.blogspot.com/-A9X6Oipw7QQ/VQhN8ZSu8aI/AAAAAAAAEvw/I7htTJsfYko/s1600/2981881%2BGreen%2BFields%2BSpring%2BLandscape%2BHD%2BWallpaperz%2B1624441.jpg")';
