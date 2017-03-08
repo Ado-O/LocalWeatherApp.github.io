@@ -51,52 +51,40 @@ var month = new Date().getMonth();
 // uzima trenutno vremena
 var weatherMain = jsonParse2.weather[0].main;
 
-if (month <= 1 || month == 11) { //zima
+if (month <= 1 || month === 11) { //zima
     if (weatherMain == "Snow") {
-        document.body.style.backgroundImage =
-            'url("https://s-media-cache-ak0.pinimg.com/originals/c8/11/e6/c811e6495c3d28c96e48f5a8c51e49fe.jpg")';
-    } else if (weatherMain == "Rain" || weatherMain == "Drizzle") {
-        document.body.style.backgroundImage =
-            'url("http://matchbin-assets.s3.amazonaws.com/public/sites/31/assets/7QQH_snowstorm.jpg")';
+        document.body.style.backgroundImage = 'url("imgBK/winterSnow.jpg")';
+    } else if (weatherMain == "Rain" || weatherMain === "Drizzle") {
+        document.body.style.backgroundImage = 'url("imgBK/winterRain.jpg")';
     } else {
-        document.body.style.backgroundImage =
-            'url("http://livehdwallpaper.com/wp-content/uploads/2016/10/Winter-Tree-Wallpapers-HD-images.jpg")';
+        document.body.style.backgroundImage = 'url("imgBK/winter.jpg")';
     };
 
 } else if (month <= 4) { // proljece
-    if (weatherMain == "Clouds" || weatherMain == "Atmosphere") {
-        document.body.style.backgroundImage =
-            'url("http://img3.themebin.com/1920x1200/misty_blue.jpg")';
-    } else if (weatherMain == "Rain" || weatherMain == "Drizzle") {
-        document.body.style.backgroundImage =
-            'url("https://cdn.pixabay.com/photo/2016/07/20/17/53/pond-1530797_960_720.jpg")';
+    if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
+        document.body.style.backgroundImage = 'url("imgBK/springCloud.jpg")';
+    } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
+        document.body.style.backgroundImage = 'url("imgBK/springRain.jpg")';
     } else {
-        document.body.style.backgroundImage =
-            'url("http://1.bp.blogspot.com/-A9X6Oipw7QQ/VQhN8ZSu8aI/AAAAAAAAEvw/I7htTJsfYko/s1600/2981881%2BGreen%2BFields%2BSpring%2BLandscape%2BHD%2BWallpaperz%2B1624441.jpg")';
+        document.body.style.backgroundImage = 'url("imgBK/summer.jpg")';
     };
 
 } else if (month <= 9) { //ljeto
-    if (weatherMain == "Clouds" || weatherMain == "Atmosphere") {
-        document.body.style.backgroundImage =
-            'url("http://www.zastavki.com/pictures/originals/2014/Nature___Seasons___Summer_Waiting_for_the_summer_rain_078345_.jpg")';
-    } else if (weatherMain == "Rain" || weatherMain == "Drizzle") {
-        document.body.style.backgroundImage =
-            'url("http://www.likehdwallpaper.com/wp-content/uploads/Nature/FTP1/2560x1440/Lost%20Summer%20rain%20Wallpapers%202560x1440.jpg")';
+    if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
+        document.body.style.backgroundImage = 'url("imgBK/summerCloud.jpg")';
+    } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
+        document.body.style.backgroundImage = 'url("imgBK/summerRain.jpg")';
     } else {
-        document.body.style.backgroundImage =
-            'url("http://kula-turist.com/wp-content/uploads/2014/05/ljetovanje.jpg")';
+        document.body.style.backgroundImage = 'url("imgBK/summer.jpg")';
     };
 
-} else if (month == 10) { // jesen
-    if (weatherMain == "Clouds" || weatherMain == "Atmosphere") {
-        document.body.style.backgroundImage =
-            'url("http://vunature.com/wp-content/uploads/2016/11/trees-twigs-landscapes-forests-autumn-leaves-branch-plants-seasons-nature-fall-wallpapers-pc-1920x1080.jpg")';
-    } else if (weatherMain == "Rain" || weatherMain == "Drizzle") {
-        document.body.style.backgroundImage =
-            'url("https://www.walldevil.com/wallpapers/a50/water-rain-autumn-drops-background-fantasy-image.jpg")';
+} else if (month === 10) { // jesen
+    if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
+        document.body.style.backgroundImage = 'url("imgBK/autmnCloud.jpg")';
+    } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
+        document.body.style.backgroundImage = 'url("imgBK/autmnRain.jpg")';
     } else {
-        document.body.style.backgroundImage =
-            'url("http://www.wallhd4.com/wp-content/uploads/2015/03/autumn-leaves-11.jpeg")';
+        document.body.style.backgroundImage = 'url("imgBK/autmn.jpg")';
     };
 };
 
