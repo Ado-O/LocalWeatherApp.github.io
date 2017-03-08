@@ -1,6 +1,6 @@
 /*** prvi request ***/
 var req1 = new XMLHttpRequest();
-req1.open("GET", "https://ip-api.com/json", false);
+req1.open("GET", "http://ip-api.com/json", false);
 req1.send(null);
 var jsonParse1 = JSON.parse(req1.responseText);
 
