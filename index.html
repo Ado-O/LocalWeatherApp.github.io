@@ -1,0 +1,53 @@
+<doctype html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="LocalWeather.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <!-- Country, City i Location -->
+        <div>
+            <h1>Local Weather App</h1>
+            <hr>
+            <p id="country">Country</p>
+            <p id="city">City</p>
+            <p id="location">Location</p>
+            <br>
+            <!-- Temp, Weather i windSpeed -->
+            <div class="row" id="white">
+                <div class="col-xs-4">
+                    <a>
+                        <img src="Icon/thermometer.png">
+                        <p id="fTemp"></p>
+                    </a>
+                </div>
+
+                <div class="col-xs-4">
+                    <a>
+                        <img id="icone">
+                        <p id="weatherType">
+                        </p>
+                    </a>
+                </div>
+
+                <div class="col-xs-4">
+                    <a>
+                        <img src="Icon/wind-sign.png">
+                        <p id="windSpeed"></p>
+                    </a>
+                </div>
+                <!-- button convert F u C -->
+                <button onclick="myFunction() ">&#176F / C&#176</button>
+            </div>
+        </div>
+        <!-- Coded by -->
+        <div id="coded ">
+            <p>Coded by <a href="https://www.linkedin.com/in/admir-o%C5%A1ijan-646493130/" target="_blank ">Osijan Admir</a></p>
+        </div>
+
+        <script type="text/javascript" src="LocalWeather API.js"></script>
+
+    </body>
+
+    </html>
