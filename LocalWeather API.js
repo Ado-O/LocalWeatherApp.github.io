@@ -1,6 +1,6 @@
 /*** prvi request ***/
 var req1 = new XMLHttpRequest();
-req1.open("GET", "http://ip-api.com/json", false);
+req1.open("GET", "https://ip-api.com/json", false);
 req1.send(null);
 var jsonParse1 = JSON.parse(req1.responseText);
 
@@ -16,7 +16,7 @@ document.querySelector("#city").innerHTML = "<strong>" + "City: " + city + "</st
 
 /*** drug request ***/
 var req2 = new XMLHttpRequest();
-req2.open("GET", "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&appid=006fc53c34059f174d74b07c366a0f8f", false);
+req2.open("GET", "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&appid=006fc53c34059f174d74b07c366a0f8f", false);
 req2.send(null);
 var jsonParse2 = JSON.parse(req2.responseText);
 
