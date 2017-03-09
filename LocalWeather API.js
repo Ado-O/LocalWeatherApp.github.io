@@ -1,115 +1,123 @@
-/*** prvi request ***/
-var req1 = new XMLHttpRequest();
-req1.open("GET", "http://ip-api.com/json", false);
-req1.send(null);
-var jsonParse1 = JSON.parse(req1.responseText);
+$(document).ready(function() {
 
-var lat = jsonParse1.lat;
-var long = jsonParse1.lon;
+    var lat;
+    var long;
+    $.getJSON("http://ip-api.com/json", function(data2) {
+        lat = data2.lat;
+        long = data2.lon;
 
-// ime grada i drzave uzimam iz prvog requesta
-var city = jsonParse1.city;
-var country = jsonParse1.country;
+        var city = data2.city;
+        var country = data2.country;
 
-document.querySelector("#country").innerHTML = "<strong>" + "Country: " + country + "</strong>";
-document.querySelector("#city").innerHTML = "<strong>" + "City: " + city + "</strong>";
+        $("#city").html(city);
+        $("#country").html(country);
 
-/*** drug request ***/
-var req2 = new XMLHttpRequest();
-req2.open("GET", "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&appid=006fc53c34059f174d74b07c366a0f8f", false);
-req2.send(null);
-var jsonParse2 = JSON.parse(req2.responseText);
 
-var tempSwap = true;
-var kTemp = jsonParse2.main.temp;
-var fTemp = ((kTemp) * (9 / 5) - 459.67).toFixed(1);
-var cTemp = (kTemp - 273).toFixed(1);
 
-var weatherType = jsonParse2.weather[0].description;
-var windSpeed = jsonParse2.wind.speed;
+        var api = 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long + '&appid=7c277fcc664e3e7978897fdbe3830700';
+        console.log(api);
 
-/*** izlaz ***/
-document.querySelector("#location").innerHTML = "<strong>" + "Location: " + jsonParse2.name + "</strong>";
-document.querySelector("#weatherType").innerHTML = weatherType;
-document.querySelector("#windSpeed").innerHTML = windSpeed + "m/s";
-document.querySelector("#fTemp").innerHTML = fTemp + "&#176F";
+        $.getJSON(api, function(data) {
+            var weatherType = data.weather[0].description;
+            var kTemp = data.main.temp;
+            var windSpeed = data.wind.speed;
 
-/*** na button mijenja F u C ***/
-function myFunction() {
-    if (tempSwap === false) {
-        document.getElementById("fTemp").innerHTML = fTemp + " &#8457;";
-        tempSwap = true;
-    } else {
-        document.getElementById("fTemp").innerHTML = cTemp + " &#8451;";
-        tempSwap = false;
-    }
-}
+            var fTemp;
+            var cTemp;
 
-/*** mijenja slike ***/
-// uzima datum
-var month = new Date().getMonth();
-// uzima trenutno vremena
-var weatherMain = jsonParse2.weather[0].main;
 
-if (month <= 1 || month === 11) { //zima
-    if (weatherMain == "Snow") {
-        document.body.style.backgroundImage = 'url("imgBK/winterSnow.jpg")';
-    } else if (weatherMain == "Rain" || weatherMain === "Drizzle") {
-        document.body.style.backgroundImage = 'url("imgBK/winterRain.jpg")';
-    } else {
-        document.body.style.backgroundImage = 'url("imgBK/winter.jpg")';
-    };
+            var tempSwap = true;
 
-} else if (month <= 4) { // proljece
-    if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
-        document.body.style.backgroundImage = 'url("imgBK/springCloud.jpg")';
-    } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
-        document.body.style.backgroundImage = 'url("imgBK/springRain.jpg")';
-    } else {
-        document.body.style.backgroundImage = 'url("imgBK/summer.jpg")';
-    };
+            fTemp = (kTemp * (9 / 5) - 459.67).toFixed(2);
+            cTemp = (kTemp - 273).toFixed(1);
 
-} else if (month <= 9) { //ljeto
-    if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
-        document.body.style.backgroundImage = 'url("imgBK/summerCloud.jpg")';
-    } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
-        document.body.style.backgroundImage = 'url("imgBK/summerRain.jpg")';
-    } else {
-        document.body.style.backgroundImage = 'url("imgBK/summer.jpg")';
-    };
+            $("#weatherType").html(weatherType);
+            $("#fTemp").html(fTemp + " &#8457; ");
+            //button
+            $("button").click(function() {
+                if (tempSwap === false) {
 
-} else if (month === 10) { // jesen
-    if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
-        document.body.style.backgroundImage = 'url("imgBK/autmnCloud.jpg")';
-    } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
-        document.body.style.backgroundImage = 'url("imgBK/autmnRain.jpg")';
-    } else {
-        document.body.style.backgroundImage = 'url("imgBK/autmn.jpg")';
-    };
-};
+                    $("#fTemp").html(fTemp + " &#8457; ");
+                    tempSwap = true;
+                } else {
 
-/*** dodavanje icone ***/
-var icone = document.querySelector("#icone");
-switch (weatherMain) {
-    case "Thunderstorm":
-        icone.setAttribute("src", "Icon/Thunderstorm.png");
-        break;
-    case "Drizzle":
-        icone.setAttribute("src", "Icon/Drizzle.png");
-        break;
-    case "Rain":
-        icone.setAttribute("src", "Icon/Rain.png");
-        break;
-    case "Snow":
-        icone.setAttribute("src", "Icon/Snow.png");
-        break;
-    case "Atmosphere" || "Clouds":
-        icone.setAttribute("src", "Icon/Atmosphere.png");
-        break;
-    case "Clear":
-        icone.setAttribute("src", "Icon/Clear.png");
-        break;
-    case "Extreme" || "Additional":
-        icone.setAttribute("src", "Icon/Extreme.png");
-        break;
-}
+                    $("#fTemp").html(cTemp + " &#8451; ");
+                    tempSwap = false;
+                }
+
+            });
+
+            windSpeed = (2.237 * (windSpeed)).toFixed(1);
+            $("#windSpeed").html(windSpeed + " mph ");
+
+            var month = new Date().getMonth();
+
+            var weatherMain = data.weather[0].main;
+
+            if (month <= 1 || month === 11) { //zima
+                if (weatherMain == "Snow") {
+                    $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097342/winterSnow_qlgv2g.jpg")');
+                } else if (weatherMain == "Rain" || weatherMain === "Drizzle") {
+                    $('body').css('url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097337/winterRain_kv7drl.jpg")');
+                } else {
+                    ('body').css('url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097342/winter_sakpuq.jpg")');
+                }
+            };
+            if (month <= 4) { // proljece
+                if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
+                    $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097328/springCloud_mb39cu.jpg")');
+                } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
+                    $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097333/springRain_euulus.jpg")');
+                } else {
+                    $('body').css('url("https://cloudinary.com/console/media_library#/dialog/image/upload/spring_p9tcnw")');
+                }
+            };
+
+
+            if (month <= 9 && month >= 5) { //ljeto
+                if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
+                    $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097338/summerCloud_yedprb.jpg")');
+                } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
+                    $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097342/summerRain_jbdu4p.jpg")');
+                } else {
+                    $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097341/summer_zgrd5a.jpg")');
+                }
+            };
+
+            if (month === 10) { // jesen
+                if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
+                    $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097335/autmnCloud_py2far.jpg")');
+                } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
+                    $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097329/autmnRain_xtgmum.jpg")');
+                } else {
+                    $('body').css('background-image', 'url("https://cloudinary.com/console/media_library#/dialog/image/upload/autmn_pgi91d")');
+                }
+            };
+
+            if (weatherMain == "Thunderstorm") {
+                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Thunderstorm_uwcae4.png');
+            } else if (weatherMain == "Drizzle") {
+                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Drizzle_qsgcrc.png');
+
+            } else if (weatherMain == "Rain") {
+                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Rain_kslmjg.png');
+
+            } else if (weatherMain == "Snow") {
+                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Snow_cvef0i.png');
+
+            } else if (weatherMain == "Atmosphere" || weatherMain == "Clouds") {
+                $('#icone').attr('src', 'https://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Atmosphere_fz52u7.png');
+            } else if (weatherMain == "Clear") {
+                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Clear_dxpj6a.png');
+
+            } else if (weatherMain == "Extreme" || weatherMain == "Additional") {
+                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Extreme_xdtdod.png');
+
+            };
+
+
+
+        });
+    });
+
+});
