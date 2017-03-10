@@ -1,57 +1,49 @@
 $(document).ready(function() {
-
-    var lat;
-    var long;
+    //poziv prvi request
     $.getJSON("http://ip-api.com/json", function(data2) {
-        lat = data2.lat;
-        long = data2.lon;
+        var lat = data2.lat;
+        var long = data2.lon;
 
+        //pozivanje city i country iz prvog requesta
         var city = data2.city;
         var country = data2.country;
 
         $("#city").html(city);
         $("#country").html(country);
 
-
-
         var api = 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long + '&appid=7c277fcc664e3e7978897fdbe3830700';
-        console.log(api);
 
+        //poziv drugi request
         $.getJSON(api, function(data) {
             var weatherType = data.weather[0].description;
             var kTemp = data.main.temp;
             var windSpeed = data.wind.speed;
 
-            var fTemp;
-            var cTemp;
-
-
             var tempSwap = true;
-
-            fTemp = (kTemp * (9 / 5) - 459.67).toFixed(2);
-            cTemp = (kTemp - 273).toFixed(1);
+            var fTemp = (kTemp * (9 / 5) - 459.67).toFixed(2);
+            var cTemp = (kTemp - 273).toFixed(1);
 
             $("#weatherType").html(weatherType);
             $("#fTemp").html(fTemp + " &#8457; ");
+
             //button
             $("button").click(function() {
                 if (tempSwap === false) {
-
                     $("#fTemp").html(fTemp + " &#8457; ");
                     tempSwap = true;
                 } else {
-
                     $("#fTemp").html(cTemp + " &#8451; ");
                     tempSwap = false;
                 }
-
             });
 
+            //windSpeed
             windSpeed = (2.237 * (windSpeed)).toFixed(1);
             $("#windSpeed").html(windSpeed + " mph ");
 
+            /*** konstrukcija za background img ***/
+            //dodavanje date i weather radi dobivanja u kojem se mjesecu nalazi korisnik i koje je weather trenutno
             var month = new Date().getMonth();
-
             var weatherMain = data.weather[0].main;
 
             if (month <= 1 || month === 11) { //zima
@@ -72,8 +64,6 @@ $(document).ready(function() {
                     $('body').css('url("https://cloudinary.com/console/media_library#/dialog/image/upload/spring_p9tcnw")');
                 }
             };
-
-
             if (month <= 9 && month >= 5) { //ljeto
                 if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
                     $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097338/summerCloud_yedprb.jpg")');
@@ -83,7 +73,6 @@ $(document).ready(function() {
                     $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097341/summer_zgrd5a.jpg")');
                 }
             };
-
             if (month === 10) { // jesen
                 if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
                     $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097335/autmnCloud_py2far.jpg")');
@@ -94,28 +83,39 @@ $(document).ready(function() {
                 }
             };
 
-            if (weatherMain == "Thunderstorm") {
-                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Thunderstorm_uwcae4.png');
-            } else if (weatherMain == "Drizzle") {
-                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Drizzle_qsgcrc.png');
-
-            } else if (weatherMain == "Rain") {
-                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Rain_kslmjg.png');
-
-            } else if (weatherMain == "Snow") {
-                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Snow_cvef0i.png');
-
-            } else if (weatherMain == "Atmosphere" || weatherMain == "Clouds") {
-                $('#icone').attr('src', 'https://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Atmosphere_fz52u7.png');
-            } else if (weatherMain == "Clear") {
-                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Clear_dxpj6a.png');
-
-            } else if (weatherMain == "Extreme" || weatherMain == "Additional") {
-                $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Extreme_xdtdod.png');
-
-            };
-
-
+            /*** konstrukcija za icon ***/
+            switch (weatherMain) {
+                case "Thunderstorm":
+                    $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Thunderstorm_uwcae4.png');
+                    break;
+                case "Drizzle":
+                    $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Drizzle_qsgcrc.png');
+                    break;
+                case "Rain":
+                    $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Rain_kslmjg.png');
+                    break;
+                case "Snow":
+                    $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Snow_cvef0i.png');
+                    break;
+                case "Clouds":
+                    $('#icone').attr('src', 'https://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Atmosphere_fz52u7.png');
+                    break;
+                case "Atmosphere":
+                    $('#icone').attr('src', 'https://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Atmosphere_fz52u7.png');
+                    break;
+                case "Clear":
+                    $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Clear_dxpj6a.png');
+                    break;
+                case "Additional":
+                    $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Extreme_xdtdod.png');
+                    break;
+                case "Extreme":
+                    $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Extreme_xdtdod.png');
+                    break;
+                default:
+                    $('#icone').attr('src', 'http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489098018/Clear_dxpj6a.png');;
+            }
+           
 
         });
     });
