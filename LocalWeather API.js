@@ -61,8 +61,7 @@ $(document).ready(function() {
                 } else if (weatherMain === "Rain" || weatherMain === "Drizzle") {
                     $('body').css('background-image', 'url("http://res.cloudinary.com/dcqcuv3gd/image/upload/v1489097333/springRain_euulus.jpg")');
                 } else {
-                    $('body').css('url("https://cloudinary.com/console/media_library#/dialog/image/upload/spring_p9tcnw")');
-                }
+                  $('body').css('background-image', 'url("http://wallpapercave.com/wp/Eqhm7HZ.jpg")');                }
             };
             if (month <= 9 && month >= 5) { //ljeto
                 if (weatherMain === "Clouds" || weatherMain === "Atmosphere") {
